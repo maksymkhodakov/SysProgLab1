@@ -2,6 +2,7 @@
 #include <regex>
 #include <vector>
 #include <fstream>
+#include <set>
 
 bool hasMoreVowels(std::string &word) {
     int vowelCount = 0;
@@ -50,17 +51,19 @@ void processFile(const std::string& filename) {
     }
 
     std::string line;
-    std::string inputText;
+    std::set<std::string> uniqueWords;
     while (std::getline(inputFile, line)) {
-        inputText = line;
-
-        std::vector<std::string> selectedWords = selectWordsWithMoreVowels(inputText);
+        std::vector<std::string> selectedWords = selectWordsWithMoreVowels(line);
         for (const std::string &word : selectedWords) {
-            std::cout << word << std::endl;
+            uniqueWords.insert(word);
         }
     }
 
     inputFile.close();
+
+    for (const std::string &word : uniqueWords) {
+        std::cout << word << std::endl;
+    }
 }
 
 int main() {
